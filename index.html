@@ -1,0 +1,59 @@
+<div>
+  <label>Path</label>
+  <input type="text" name="path" />
+</div>
+
+<div>
+  <label>Width x Height</label>
+  <input type="number" name="width" value="100" />
+  <input type="number" name="height" value="100" />
+</div>
+
+<div>
+  <label>Decimals</label>
+  <input type="number" name="decimals" value="3" />
+</div>
+
+<div>
+  <button id="convert">Convert</button>
+</div>
+
+<div>
+  <textarea id="log" rows="5" cols="120"></textarea>
+</div>
+
+<script>
+  class Convertor {
+    constructor() {
+      this.$input = document.querySelector('[name="path"]')
+      this.$width = document.querySelector('[name="width"]')
+      this.$height = document.querySelector('[name="height"]')
+      this.$decimals = document.querySelector('[name="decimals"]')
+      this.$submit = document.querySelector('#convert')
+      this.$log = document.querySelector('#log')
+
+      this.handleClick = this.handleClick.bind(this)
+
+      this.$submit.addEventListener('click', this.handleClick)
+    }
+
+    handleClick(e) {
+      let count = -1
+      const width = this.$width.value
+      const height = this.$height.value
+      const decimals = this.$decimals.value
+      const converted = this.$input.value.replace(/(\d+(\.\d+)?)/g, matches => {
+        count++
+
+        if(count % 2)
+          return (matches / height).toFixed(decimals)
+        else
+          return (matches / width).toFixed(decimals)
+      })
+
+      this.$log.value = converted
+    }
+  }
+
+  window.addEventListener('load', new Convertor())
+</script>
